@@ -1,5 +1,6 @@
 import { z } from "zod";
 import catchErrors from "../utils/catchErrors";
+import { createAccount } from "../services/auth.service";
 
 const registerSchema = z
   .object({
@@ -13,15 +14,23 @@ const registerSchema = z
     path: ["confirmPassword"],
   });
 
-export const registerHandler = catchErrors(async (req, res) => {
-  //validate request
-  const request = registerSchema.parse({
-    ...req.body,
-    userAgent: req.headers["user-agent"],
-  });
-
-  // call service
-
+  export const registerHandler = catchErrors(async (req, res) => {
+    // Validate request
+    const request = registerSchema.parse({
+      ...req.body,
+      userAgent: req.headers["user-agent"] || "unknown", // Default if undefined
+    });
   
-  // return response
-});
+    // Ensure `userAgent` is always a string
+    const accountParams = {
+      ...request,
+      userAgent: request.userAgent || "unknown", // Just a safeguard
+    };
+  
+    // Call service
+    const { user, accessToken, refreshToken } = await createAccount(accountParams);
+  
+    // Return response
+  });
+  
+  
