@@ -21,5 +21,7 @@ export const registerHandler = catchErrors(async (req, res) => {
   });
 
   // call service
+
+  
   // return response
 });
