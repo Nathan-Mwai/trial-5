@@ -14,23 +14,23 @@ const registerSchema = z
     path: ["confirmPassword"],
   });
 
-  export const registerHandler = catchErrors(async (req, res) => {
-    // Validate request
-    const request = registerSchema.parse({
-      ...req.body,
-      userAgent: req.headers["user-agent"] || "unknown", // Default if undefined
-    });
-  
-    // Ensure `userAgent` is always a string
-    const accountParams = {
-      ...request,
-      userAgent: request.userAgent || "unknown", // Just a safeguard
-    };
-  
-    // Call service
-    const { user, accessToken, refreshToken } = await createAccount(accountParams);
-  
-    // Return response
+export const registerHandler = catchErrors(async (req, res) => {
+  // Validate request
+  const request = registerSchema.parse({
+    ...req.body,
+    userAgent: req.headers["user-agent"] || "unknown", // Default if undefined
   });
-  
-  
+
+  // Ensure `userAgent` is always a string
+  const accountParams = {
+    ...request,
+    userAgent: request.userAgent || "unknown", // Just a safeguard
+  };
+
+  // Call service
+  const { user, accessToken, refreshToken } = await createAccount(
+    accountParams
+  );
+
+  // Return response
+});
