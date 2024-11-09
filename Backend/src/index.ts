@@ -29,7 +29,7 @@ app.get("/", (req, res, next) => {
 
 app.use(errorHandler);
 
-app.listen(4004, async () => {
+app.listen(PORT, async () => {
   console.log(
     `Server is running on port ${PORT} in the ${NODE_ENV} environment`
   );
